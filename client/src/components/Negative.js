@@ -6,11 +6,15 @@ import link from './img/link.png'
 
 function Negative() {
     const [ndata,setNdata] = useState([])
-    useEffect(async ()=>{
-        const url = await fetch('/read')
-        const data = await url.json()
-        
-        await setNdata(data.row);
+    useEffect(()=>{
+        const fetchData = async()=>{
+
+            const url = await fetch('/read')
+            const data = await url.json()
+            
+            await setNdata(data.row);
+        }
+        fetchData()
     },[ndata])
     const UpdateStatus = async (id)=>{
         const url = await fetch('/update',{
@@ -35,7 +39,7 @@ function Negative() {
                     var nam = `${i.name}`.split(" ")[0]
                     
                     return(
-                        <div className="n-container">
+                        <div className="n-container" key={i.id}>
                             <div className="n1">
                                 <h1 style={{overflow: "hidden"}}>{nam} </h1>
                                 <button
